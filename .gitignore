@@ -1,0 +1,11 @@
+# ignore environment varaibles  
+.env
+
+# ignore python virtual environmnet 
+venv/
+
+# ignore the dataset for now as it is big
+movies.csv
+
+# project plan
+plan.MD
