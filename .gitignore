@@ -7,5 +7,8 @@ venv/
 # ignore the dataset for now as it is big
 movies.csv
 
+# ignore JSON for now
+movies.json 
+
 # project plan
 plan.MD
