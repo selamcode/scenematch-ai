@@ -1,0 +1,194 @@
+[
+  {
+    "id": 1,
+    "title": "The Notebook",
+    "overview": "A poor yet passionate young man falls in love with a rich young woman...",
+    "vote_average": 7.9,
+    "tagline": "Behind every great love is a great story.",
+    "genres": ["romance", "drama"]
+  },
+  {
+    "id": 2,
+    "title": "Pride & Prejudice",
+    "overview": "Sparks fly when spirited Elizabeth Bennet meets single, rich, and proud Mr. Darcy.",
+    "vote_average": 8.1,
+    "tagline": "A romance ahead of its time.",
+    "genres": ["romance", "drama"]
+  },
+  {
+    "id": 3,
+    "title": "La La Land",
+    "overview": "While navigating their careers in Los Angeles, a pianist and an actress fall in love...",
+    "vote_average": 8.0,
+    "tagline": "Here's to the fools who dream.",
+    "genres": ["romance", "music", "drama"]
+  },
+  {
+    "id": 4,
+    "title": "Titanic",
+    "overview": "A seventeen-year-old aristocrat falls in love with a kind but poor artist...",
+    "vote_average": 7.9,
+    "tagline": "Nothing on Earth could come between them.",
+    "genres": ["romance", "drama"]
+  },
+  {
+    "id": 5,
+    "title": "Call Me by Your Name",
+    "overview": "In 1980s Italy, romance blossoms between a seventeen-year-old student and an older man...",
+    "vote_average": 8.0,
+    "tagline": "Is it better to speak or to die?",
+    "genres": ["romance", "drama"]
+  },
+  {
+    "id": 6,
+    "title": "The Fault in Our Stars",
+    "overview": "Two teenage cancer patients begin a life-affirming journey...",
+    "vote_average": 7.7,
+    "tagline": "One sick love story.",
+    "genres": ["romance", "drama"]
+  },
+  {
+    "id": 7,
+    "title": "Se7en",
+    "overview": "Two detectives hunt a serial killer who uses the seven deadly sins as his motives.",
+    "vote_average": 8.6,
+    "tagline": "Seven deadly sins. Seven ways to die.",
+    "genres": ["thriller", "crime", "mystery"]
+  },
+  {
+    "id": 8,
+    "title": "Gone Girl",
+    "overview": "With his wife's disappearance becoming a media circus, a man is thrust under suspicion.",
+    "vote_average": 8.1,
+    "tagline": "You don't know what you've got 'til it's...",
+    "genres": ["thriller", "mystery", "drama"]
+  },
+  {
+    "id": 9,
+    "title": "The Silence of the Lambs",
+    "overview": "A young FBI cadet seeks help from a brilliant psychiatrist and cannibal...",
+    "vote_average": 8.6,
+    "tagline": "To enter the mind of a killer she must challenge the mind of a madman.",
+    "genres": ["thriller", "crime", "drama"]
+  },
+  {
+    "id": 10,
+    "title": "Shutter Island",
+    "overview": "Teddy Daniels investigates a psychiatric facility on Shutter Island...",
+    "vote_average": 8.2,
+    "tagline": "Someone is missing.",
+    "genres": ["thriller", "mystery"]
+  },
+  {
+    "id": 11,
+    "title": "Prisoners",
+    "overview": "When Keller Dover's daughter goes missing, he takes matters into his own hands...",
+    "vote_average": 8.1,
+    "tagline": "Every moment matters.",
+    "genres": ["thriller", "crime", "drama"]
+  },
+  {
+    "id": 12,
+    "title": "Zodiac",
+    "overview": "A cartoonist becomes obsessed with tracking the Zodiac killer in San Francisco.",
+    "vote_average": 7.9,
+    "tagline": "There's more than one way to lose your life to a killer.",
+    "genres": ["thriller", "crime", "mystery"]
+  },
+  {
+    "id": 13,
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "overview": "A Hobbit and eight companions begin a journey to destroy the One Ring.",
+    "vote_average": 8.8,
+    "tagline": "One ring to rule them all.",
+    "genres": ["adventure", "fantasy", "action"]
+  },
+  {
+    "id": 14,
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "overview": "A boy discovers he's a wizard and begins his magical education.",
+    "vote_average": 7.9,
+    "tagline": "Let the magic begin.",
+    "genres": ["adventure", "fantasy", "family"]
+  },
+  {
+    "id": 15,
+    "title": "The Hobbit: An Unexpected Journey",
+    "overview": "Bilbo Baggins joins a group of dwarves on a quest to reclaim treasure from a dragon.",
+    "vote_average": 7.8,
+    "tagline": "From the smallest beginnings come the greatest legends.",
+    "genres": ["adventure", "fantasy"]
+  },
+  {
+    "id": 16,
+    "title": "Avatar",
+    "overview": "A marine on an alien world becomes torn between duty and protecting the native people.",
+    "vote_average": 7.9,
+    "tagline": "Enter the world.",
+    "genres": ["adventure", "science fiction"]
+  },
+  {
+    "id": 17,
+    "title": "The Chronicles of Narnia: The Lion, the Witch and the Wardrobe",
+    "overview": "Four kids discover a magical land and join a mystical lion to save it from darkness.",
+    "vote_average": 7.1,
+    "tagline": "Evil has reigned for 100 years...",
+    "genres": ["adventure", "fantasy", "family"]
+  },
+  {
+    "id": 18,
+    "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
+    "overview": "A pirate and a blacksmith team up to rescue a woman from cursed sailors.",
+    "vote_average": 8.0,
+    "tagline": "Prepare to be blown out of the water.",
+    "genres": ["adventure", "fantasy", "action"]
+  },
+  {
+    "id": 19,
+    "title": "The Lion King",
+    "overview": "A young lion prince flees his kingdom only to learn the true meaning of responsibility.",
+    "vote_average": 8.5,
+    "tagline": "Life's greatest adventure is finding your place in the Circle of Life.",
+    "genres": ["animation", "drama", "family"]
+  },
+  {
+    "id": 20,
+    "title": "Forrest Gump",
+    "overview": "The story of an extraordinary man living through historic American events.",
+    "vote_average": 8.8,
+    "tagline": "Life is like a box of chocolates.",
+    "genres": ["drama", "comedy"]
+  },
+  {
+    "id": 21,
+    "title": "Whiplash",
+    "overview": "A young drummer is pushed to his limits by an abusive music instructor.",
+    "vote_average": 8.5,
+    "tagline": "The road to greatness can take you to the edge.",
+    "genres": ["drama", "music"]
+  },
+  {
+    "id": 22,
+    "title": "Spirited Away",
+    "overview": "A young girl is trapped in a mysterious world of spirits and gods.",
+    "vote_average": 8.6,
+    "tagline": "A journey beyond imagination.",
+    "genres": ["animation", "fantasy", "adventure"]
+  },
+  {
+    "id": 23,
+    "title": "Bohemian Rhapsody",
+    "overview": "The rise of the band Queen and the life of its lead singer, Freddie Mercury.",
+    "vote_average": 8.0,
+    "tagline": "Fearless lives forever.",
+    "genres": ["music", "biography", "drama"]
+  },
+  {
+    "id": 24,
+    "title": "The Grand Budapest Hotel",
+    "overview": "The adventures of a legendary concierge at a famous European hotel.",
+    "vote_average": 8.1,
+    "tagline": "A murder case of scandalous proportions.",
+    "genres": ["comedy", "drama", "crime"]
+  }
+]
