@@ -1,12 +1,21 @@
+import os
+from dotenv import load_dotenv
 import qdrant_client_setup 
 from collection_config import create_my_collection
+from embedding import embed
+
 
 def main():
-# create 
+    
+    load_dotenv()
+    filepath = os.getenv("DATASET_JSON_TEST_PATH")
+    # create 
     movie_client_test = qdrant_client_setup.create_qdrant_local_client()
     collection_name = "movie-rag-test"
     emebedding_dim = 512
+    
     create_my_collection(movie_client_test, collection_name, emebedding_dim)
+    embed(collection_name,filepath, movie_client_test)
 
 if __name__ == "__main__":
     main()
