@@ -9,8 +9,8 @@ def create_qdrant_local_client() -> QdrantClient:
         if response.status != 200:
             raise ConnectionError(f"Qdrant responded with status {response.status}")
     except Exception as e:
-        print(f"❌ Failed to connect to Qdrant: {e}")
+        print(f"Failed to connect to Qdrant: {e}")
         raise ConnectionError("Qdrant is not reachable at http://localhost:6333")
 
-    print("✅ Qdrant connection established.")
+    print("Qdrant connection established.")
     return QdrantClient(url="http://localhost:6333")
