@@ -23,7 +23,11 @@ def prepare_points(docs: list[dict]) -> list[PointStruct]:
                         text=tagline,
                         model="jinaai/jina-embeddings-v2-small-en",
                     ),
-                    "genre_sparse_bm25": Document(
+                    "genre_dense": Document(
+                        text=tagline,
+                        model="jinaai/jina-embeddings-v2-small-en",
+                    ),
+                    "overview_sparse_bm25": Document(
                         text=" ".join(genres),
                         model="Qdrant/bm25",
                     )

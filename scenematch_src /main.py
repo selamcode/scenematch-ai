@@ -18,7 +18,7 @@ def main():
     create_my_collection(movie_client_test, collection_name, emebedding_dim)
     embed(collection_name,filepath, movie_client_test)
 
-    query = "science fiction"
+    query = "could you please recommend a romance movie"
     print(multi_stage_search(collection_name,movie_client_test,query, 3))
     
 

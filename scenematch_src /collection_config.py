@@ -20,9 +20,13 @@ def create_my_collection(client: QdrantClient, collection_name: str, embedding_d
                 size=embedding_dim,
                 distance=Distance.COSINE
             ),
+            "genre_dense": VectorParams(
+                size=embedding_dim,
+                distance=Distance.COSINE
+            ),
         },
         sparse_vectors_config={
-            "genre_sparse_bm25": SparseVectorParams(
+            "overview_sparse_bm25": SparseVectorParams(
                 modifier=models.Modifier.IDF
             )
         }
