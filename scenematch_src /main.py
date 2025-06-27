@@ -18,9 +18,14 @@ def main():
     create_my_collection(movie_client_test, collection_name, emebedding_dim)
     embed(collection_name,filepath, movie_client_test)
 
-    query = "could you please recommend a romance movie"
-    print(multi_stage_search(collection_name,movie_client_test,query, 3))
+    query = "could you please recommend a romance and action movie"
+    print(multi_stage_search(collection_name,movie_client_test,query, 10))
     
+    result = multi_stage_search(collection_name,movie_client_test,query, 10)
+    
+    print("\n Here are your top 10 recomendations \n")
+    for point in result:
+        print("\n", point.payload["title"])
 
 if __name__ == "__main__":
     main()

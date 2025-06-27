@@ -49,11 +49,14 @@ def multi_stage_search(collection_name:str,  client:QdrantClient, query: str, li
                 limit=(1 * limit),
             ),
         ],
-        query=models.Document(text=query, model="jinaai/jina-embeddings-v2-small-en"),
-        using="overview_dense",
-        limit=limit,
-        with_payload=True
-    )
+        #query=models.FusionQuery(fusion=models.Fusion.DBSF),
+        #with_payload=True,
+        
 
+        #you can use this too
+        query=models.FusionQuery(fusion=models.Fusion.RRF),
+        with_payload=True,
+       
+    )
 
     return results.points
