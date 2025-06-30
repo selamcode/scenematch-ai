@@ -36,6 +36,7 @@ def prepare_points(docs: list[dict]) -> list[PointStruct]:
                     "title": doc.get("title"),
                     "vote_average": doc.get("vote_average"),
                     "genres": genres,
+                    "overview": doc.get("overview")
                 },
             )
         )
