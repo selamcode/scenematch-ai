@@ -12,3 +12,9 @@ movies.json
 
 # project plan
 plan.MD
+
+#ignore qdrant storage
+qdrant_storage/
+
+# ignore pycache
+__paycache__
