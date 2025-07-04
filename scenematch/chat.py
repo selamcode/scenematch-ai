@@ -45,3 +45,15 @@ def run_chatbot_loop(collection_name: str, qdrant_client, openai_client):
         print("\nMovieBot recommendations:\n")
         print(reply)
         print("\n---\n")
+        
+def chat_with_user(user_input: str, collection_name: str, qdrant_client, openai_client) -> str:
+    if user_input.lower() in {"exit", "quit", "q"}:
+        return "Goodbye! Enjoy your movies 🎬"
+
+    results = multi_stage_search(collection_name, qdrant_client, user_input, limit=10)
+
+    if not results:
+        return "Sorry, I couldn't find any movies matching your request. Try again."
+
+    reply = chat_with_openai(user_input, results, openai_client)
+    return reply

@@ -33,6 +33,7 @@ def main():
     ]
     '''
 
+
     run_chatbot_loop(collection_name, movie_client_test, openai_client)
 
      

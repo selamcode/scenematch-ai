@@ -1,0 +1,99 @@
+body {
+  background: #0d1117;
+  color: #fff;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+  padding: 1rem;
+}
+
+h2 {
+  text-align: center;
+  color: #58a6ff;
+  margin-bottom: 1rem;
+}
+
+.chat {
+  background: #161b22;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.bubble {
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  max-width: 90%;
+  word-wrap: break-word;
+}
+
+.user {
+  background: #1f6feb; /* medium bright blue */
+  color: white;
+  align-self: flex-end;
+}
+
+.bot {
+  background: #2e7d32; /* strong dark green */
+  color: white;
+  align-self: flex-start;
+}
+
+.user .label {
+  color: #00e5ff; /* bright cyan for "You:" label */
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.bot .label {
+  color: #ffb300; /* bright amber for "MovieBot:" label */
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.message {
+  white-space: pre-wrap;
+  margin-left: 0.25rem;
+}
+
+form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background: #388bfd;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  background: #2a6fdb;
+}
