@@ -33,4 +33,4 @@ def chat():
     return render_template("chat.html", chat_history=chat_history)
 
 if __name__ == "__main__":
-    app.run(debug=True, host="127.0.0.1", port=5050)
+    app.run(debug=True, host="127.0.0.1", port=5000)

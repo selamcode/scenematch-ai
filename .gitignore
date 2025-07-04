@@ -18,3 +18,5 @@ qdrant_storage/
 
 # ignore pycache
 __paycache__
+
+chat_gui.py
