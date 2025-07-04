@@ -3,6 +3,8 @@
 
 # ignore python virtual environmnet 
 venv/
+.venv
+
 
 # ignore the dataset for now as it is big
 movies.csv
@@ -20,3 +22,9 @@ qdrant_storage/
 __paycache__
 
 chat_gui.py
+
+__pycache__/
+*.py[cod]
+
+
+.DS_Store
