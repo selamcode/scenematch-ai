@@ -1,12 +1,14 @@
 import os
 import pandas as pd
 from dotenv import load_dotenv
+import uuid
 
 load_dotenv()
 
 # Config and Setup
 def get_dataset_path():
     return os.getenv("DATASET_PATH")
+
 
 # Cleaning Helpers
 def clean_genres(genres_str):
@@ -20,8 +22,8 @@ def clean_genres(genres_str):
 def clean_movies_df(df: pd.DataFrame) -> pd.DataFrame:
     # Select relevant columns
     selected_columns = [
-        "id", "title", "overview", "genres", "keywords", "tagline", "vote_average",
-        "vote_count", "release_date", "runtime", "original_language", "poster_path", "popularity"
+        "title", "overview", "genres", "keywords", "tagline", "vote_average",
+        "vote_count", "release_date", "runtime", "original_language", "popularity"
     ]
     df = df[selected_columns]
     df = df.loc[:, ~df.columns.duplicated()]
@@ -37,15 +39,19 @@ def clean_movies_df(df: pd.DataFrame) -> pd.DataFrame:
     # Fill missing data
     df["tagline"] = df["tagline"].fillna('')
     df["genres"] = df["genres"].fillna('unknown')
+    df["keywords"] = df["keywords"].fillna("unknown")
     df["title"] = df["title"].fillna("Unknown Title")
 
-    # Apply genre cleaning
+    # Clean genres list
     df["genres"] = df["genres"].apply(clean_genres)
+
+    # Assign new UUIDs as unique string IDs
+    df.insert(0, "id", [str(uuid.uuid4()) for _ in range(len(df))])
 
     return df
 
-# Exported Main Function to dlt
 
+# Exported Main Function to DLT
 def get_clean_movie_data(as_json: bool = False):
     dataset_path = get_dataset_path()
     df = pd.read_csv(dataset_path)
@@ -58,12 +64,11 @@ def get_clean_movie_data(as_json: bool = False):
 
 
 # Optional: Save to file if running directly
-
 if __name__ == "__main__":
     movies = get_clean_movie_data(as_json=True)
-    
+
     import json
     with open("movies.json", "w", encoding="utf-8") as f:
         json.dump(movies, f, ensure_ascii=False, indent=2)
-    
+
     print(f"Saved {len(movies)} cleaned movies to movies.json")
