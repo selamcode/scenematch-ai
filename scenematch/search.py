@@ -49,6 +49,7 @@ def multi_stage_search(collection_name:str,  client:QdrantClient, query: str, li
                 limit=(1 * limit),
             ),
         ],
+        
         #query=models.FusionQuery(fusion=models.Fusion.DBSF),
         #with_payload=True,
         
