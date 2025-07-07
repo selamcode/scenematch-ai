@@ -4,6 +4,7 @@ from qdrant_client.models import PointStruct, Document
 from io_utils import load_json
 
 
+
 def prepare_points(docs: list[dict]) -> list[PointStruct]:
     points = []
     for doc in docs:
