@@ -5,11 +5,13 @@ What it tells you: How many of the top-k results are actually relevant?
 Why it's useful: Recommenders usually show a short list. If top results aren't good, users won't scroll.
 
 `Formula:`
-<br>
+
+
 <br>
 
 
-> $$
+
+>$$
 \text{Precision@k} = \frac{\text{Number of relevant results in top-}k}{k}
 $$
 
@@ -66,11 +68,14 @@ $$
 #### Summary
 
 
+- Quality of top results (Precision@k)
 
-- Precision@k: top-k quality
+- Coverage of all relevant movies (Recall)
 
-- Recall@k: coverage
+- How soon relevant items appear (MRR)
 
-- MRR: early ranking quality
+#### I might add
+
+- Frequency of hitting any relevant item in top-k (Hit Rate @k) 
 
  
