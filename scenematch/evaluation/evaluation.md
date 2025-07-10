@@ -26,13 +26,14 @@ What it tells you: How many of all relevant results were retrieved?
 Why it's useful: Shows coverage — are we missing good recommendations?
 
 `Formula:`
-<br>
-<br>
+
+
 
 
 > $$
 \text{Recall@k} = \frac{\text{Number of relevant results in top-}k}{\text{Total number of relevant results}}
 $$
+
 ​
  
 ---
