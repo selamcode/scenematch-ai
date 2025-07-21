@@ -1,57 +1,59 @@
-from typing import List, Dict
-from scenematch.search import multi_stage_search
-from qdrant_client import QdrantClient
-from .evaluation_metrics import precision_at_k, recall_at_k, reciprocal_rank
-from .ground_truth import ground_truth  # This is your function returning Dict[str, List[str]]
+"""
+
+Runs the retrieval evaluation metrics defined in retrieval_evaluation_methods.py
+
+"""
+
+import json
+from collections import defaultdict
+from typing import Dict, List
+
+import retrieval_evaluation_methods as rem
 
 
-def evaluate_query(
-    collection_name: str,
-    client: QdrantClient,
-    query: str,
-    relevant_ids: List[str],
-    k: int = 10
-) -> Dict:
-    """
-    Evaluate a single query against ground truth.
+def eval_retrieval(gt_path: str,
+                   res_path: str,
+                   k: int = 5) -> Dict[str, float]:
+    
+    ground = json.load(open(gt_path, encoding="utf-8"))
+    retrieved = json.load(open(res_path, encoding="utf-8"))
 
-    Args:
-        collection_name (str): Qdrant collection name.
-        client (QdrantClient): Qdrant client instance.
-        query (str): User search query.
-        relevant_ids (List[str]): Ground truth relevant document IDs.
-        k (int): Cutoff rank for precision and recall.
 
-    Returns:
-        dict: Evaluation metrics for the query.
-    """
-    # Run the search to get predicted results
-    results = multi_stage_search(collection_name=collection_name, client=client, query=query, limit=k)
-    predicted_ids = [point.id for point in results]
+    bucket: Dict[str, List[float]] = defaultdict(list)
 
-    # Calculate metrics
-    precision = precision_at_k(predicted_ids, relevant_ids, k)
-    recall = recall_at_k(predicted_ids, relevant_ids, k)
-    rr = reciprocal_rank(predicted_ids, relevant_ids)
 
-    return {
-        "query": query,
-        "precision_at_k": precision,
-        "recall_at_k": recall,
-        "reciprocal_rank": rr,
-    }
+    for scenario in ground:
+        relevant_set = set(ground[scenario])
+
+       
+        if scenario not in retrieved:
+            continue
+
+        ranked_lists = retrieved[scenario]
+        for ranked in ranked_lists:
+            bucket["precision@k"].append(
+                rem.precision_at_k(ranked, relevant_set, k))
+            bucket["recall"].append(
+                rem.recall(ranked, relevant_set))
+            bucket["mrr"].append(
+                rem.reciprocal_rank(ranked, relevant_set))
+            bucket["hit@k"].append(
+                rem.hit_rate_k(ranked, relevant_set, k))
+
+
+    results: Dict[str, float] = {}
+    for metric in bucket:
+        values = bucket[metric]
+        if values:
+            results[metric] = sum(values) / float(len(values))
+        else:
+            results[metric] = 0.0
+    return results
+
 
 
 if __name__ == "__main__":
-    client = QdrantClient(url="http://localhost:6333")  # your Qdrant client config
-    collection_name = "movie-rag-test"
-
-    gt_dict = ground_truth()  # Now returns Dict[str, List[str]]
-
-    for query, relevant_ids in gt_dict.items():
-        eval_results = evaluate_query(collection_name, client, query, relevant_ids, k=10)
-        print(f"\nEvaluation for query: '{query}'")
-        print(f"Precision@10      : {eval_results['precision_at_k']:.3f}")
-        print(f"Recall@10         : {eval_results['recall_at_k']:.3f}")
-        print(f"Reciprocal Rank   : {eval_results['reciprocal_rank']:.3f}")
-        print("-" * 50)
+    SCORES = eval_retrieval("ground_truth.json", "retrieval_results.json", k=5)
+    print("\n=== RETRIEVAL METRICS (macro-average) ===")
+    for metric in sorted(SCORES):
+        print(f"{metric:12}: {SCORES[metric]:.4f}")
