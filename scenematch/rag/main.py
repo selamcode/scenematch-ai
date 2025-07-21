@@ -1,10 +1,10 @@
 import os
 from dotenv import load_dotenv
-from client_setup import create_qdrant_local_client, create_openai_client
-from collection_config import create_my_collection
-from embedding import embed
+from scenematch.clients.client_setup import create_qdrant_local_client, create_openai_client
+from scenematch.rag.collection_config import create_my_collection
+from scenematch.rag.embedding import embed
 #from search import multi_stage_search
-from chat import run_chatbot_loop
+from scenematch.rag.agentic_chat import run_chatbot_loop
 
 
 def main():

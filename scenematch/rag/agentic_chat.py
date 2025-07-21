@@ -1,8 +1,8 @@
-from prompt import build_prompt
-from util import get_payloads
+from scenematch.rag.prompt import build_prompt
+from scenematch.util import get_payloads
 from qdrant_client.models import ScoredPoint
-from search import multi_stage_search 
-from client_setup import create_qdrant_local_client, create_openai_client
+from scenematch.rag.search import multi_stage_search 
+from scenematch.clients.client_setup import create_qdrant_local_client, create_openai_client
 
 def detect_intent(openai_client, user_input: str) -> str:
     response = openai_client.chat.completions.create(
@@ -20,6 +20,7 @@ def chat_with_openai(user_input: str, payload_str: str, openai_client) -> str:
     system_prompt = (
         build_prompt(user_input, payload_str)
         + "\nInstructions for the assistant:\n"
+        + "- Make samll talks very short and polite\n"
         + "- Avoid repeating greetings if they have been said before.\n"
         + "- Do not add generic or filler phrases.\n"
         + "- Keep responses concise, relevant, and focused on the user's question.\n"

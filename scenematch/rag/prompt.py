@@ -1,4 +1,4 @@
-from util import get_payloads  # Make sure util.py is in the same directory or properly imported
+from scenematch.util import get_payloads  # Make sure util.py is in the same directory or properly imported
 
 def build_prompt(user_input: str, payload: str) -> str:
     role = """

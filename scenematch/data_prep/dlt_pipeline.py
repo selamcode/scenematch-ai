@@ -1,8 +1,8 @@
 import dlt
-from prepare_data import get_clean_movie_data
-from collection_config import create_my_collection
-from embedding import prepare_points, upsert_points
-from client_setup import create_qdrant_local_client
+from data_prep.prepare_data import get_clean_movie_data
+from rag.collection_config import create_my_collection
+from rag.embedding import prepare_points, upsert_points
+from clients.client_setup import create_qdrant_local_client
 import json
 import os
 from dotenv import load_dotenv

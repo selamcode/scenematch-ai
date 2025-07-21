@@ -1,14 +1,7 @@
 
-from qdrant_client import QdrantClient, models
+from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct, Document
-from io_utils import load_json
-
-
-
-from qdrant_client import QdrantClient, models
-from qdrant_client.models import PointStruct, Document
-from io_utils import load_json
-
+from scenematch.util import load_json
 
 def prepare_points(docs: list[dict]) -> list[PointStruct]:
     points = []

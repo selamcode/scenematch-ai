@@ -1,6 +1,11 @@
 
+import json
 from qdrant_client.models import ScoredPoint
 
+
+def load_json(filepath: str):
+    with open(filepath, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 def get_payloads(results: list[ScoredPoint]) -> list[str]:
     
