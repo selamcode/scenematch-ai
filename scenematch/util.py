@@ -8,14 +8,36 @@ def load_json(filepath: str):
         return json.load(f)
 
 def get_payloads(results: list[ScoredPoint]) -> list[str]:
-    
     formatted = []
     for result in results:
-        payload = result.payload
+        payload = result.payload or {}
+
         title = payload.get("title", "Unknown Title")
-        rating = payload.get("vote_average", "N/A")  # Will keep decimals like 8.1
+        overview = payload.get("overview", "No overview available.")
+        rating = payload.get("vote_average", "N/A")
+        vote_count = payload.get("vote_count", "N/A")
+        tagline = payload.get("tagline", "")
         genres = ", ".join(payload.get("genres", []))
-        
-        text = f'Title: {title}, Rating: {rating}/10, Genres: {genres}'
-        formatted.append(text)
+        keywords = payload.get("keywords", "")
+        release_date = payload.get("release_date", "Unknown")
+        runtime = payload.get("runtime", "Unknown")
+        language = payload.get("original_language", "Unknown")
+        popularity = payload.get("popularity", "N/A")
+
+        text = (
+            f"Title: {title}\n"
+            f"Tagline: {tagline}\n"
+            f"Overview: {overview}\n"
+            f"Genres: {genres}\n"
+            f"Keywords: {keywords}\n"
+            f"Rating: {rating}/10 from {vote_count} votes\n"
+            f"Release Date: {release_date}\n"
+            f"Runtime: {runtime} minutes\n"
+            f"Language: {language}\n"
+            f"Popularity Score: {popularity}\n"
+        )
+
+        formatted.append(text.strip())
+
     return formatted
+
