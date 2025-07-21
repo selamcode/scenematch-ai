@@ -5,13 +5,19 @@ from io_utils import load_json
 
 
 
+from qdrant_client import QdrantClient, models
+from qdrant_client.models import PointStruct, Document
+from io_utils import load_json
+
+
 def prepare_points(docs: list[dict]) -> list[PointStruct]:
     points = []
     for doc in docs:
         overview = doc.get("overview", "")
         tagline = doc.get("tagline", "")
         genres = doc.get("genres", [])
-        
+        keywords = doc.get("keywords", "")
+
         points.append(
             PointStruct(
                 id=doc["id"],
@@ -24,11 +30,15 @@ def prepare_points(docs: list[dict]) -> list[PointStruct]:
                         text=tagline,
                         model="jinaai/jina-embeddings-v2-small-en",
                     ),
-                    "genre_dense": Document(
-                        text=tagline,
+                    "keywords_dense": Document(
+                        text=keywords,
                         model="jinaai/jina-embeddings-v2-small-en",
                     ),
                     "overview_sparse_bm25": Document(
+                        text=overview,
+                        model="Qdrant/bm25",
+                    ),
+                    "genre_sparse_bm25": Document(
                         text=" ".join(genres),
                         model="Qdrant/bm25",
                     )
@@ -37,12 +47,15 @@ def prepare_points(docs: list[dict]) -> list[PointStruct]:
                     "title": doc.get("title"),
                     "vote_average": doc.get("vote_average"),
                     "genres": genres,
-                    "overview": doc.get("overview")
+                    "overview": overview,
+                    "tagline": tagline,
+                    "keywords": keywords,
                 },
             )
         )
 
     return points
+
 
 def upsert_points(client: QdrantClient, collection_name: str, points: list[PointStruct]) -> None:
     

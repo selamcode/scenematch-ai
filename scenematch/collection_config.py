@@ -4,8 +4,8 @@ from qdrant_client.models import VectorParams, SparseVectorParams, Distance
 def create_my_collection(client: QdrantClient, collection_name: str, embedding_dim: int) -> None:
     
     if client.collection_exists(collection_name=collection_name):
-        print(f"Collection '{collection_name}' already exists. Skipping creation.")
-        return
+        print(f"Collection '{collection_name}' already exists. Deleting it to apply new structure.")
+        client.delete_collection(collection_name=collection_name)
 
     print(f"Creating collection '{collection_name}'...")
 
@@ -20,7 +20,7 @@ def create_my_collection(client: QdrantClient, collection_name: str, embedding_d
                 size=embedding_dim,
                 distance=Distance.COSINE
             ),
-            "genre_dense": VectorParams(
+            "keywords_dense": VectorParams(
                 size=embedding_dim,
                 distance=Distance.COSINE
             ),
@@ -28,8 +28,12 @@ def create_my_collection(client: QdrantClient, collection_name: str, embedding_d
         sparse_vectors_config={
             "overview_sparse_bm25": SparseVectorParams(
                 modifier=models.Modifier.IDF
-            )
+            ),
+            "genre_sparse_bm25": SparseVectorParams(
+                modifier=models.Modifier.IDF
+            ),
         }
     )
 
-    print(f"Collection '{collection_name}' created.")
+    print(f"Collection '{collection_name}' created successfully.")
+

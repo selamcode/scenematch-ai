@@ -1,5 +1,5 @@
-from qdrant_client import models
-from qdrant_client import QdrantClient
+from qdrant_client import models, QdrantClient 
+from qdrant_client.models import Document
 '''
 You correctly understood that:
 
@@ -20,33 +20,34 @@ BM25 search (main) → Rerank the candidates
 ↓
 Final result (results.points)
 '''
-def multi_stage_search(collection_name:str,  client:QdrantClient, query: str, limit: int) -> list[models.ScoredPoint]:
+def multi_stage_search(collection_name: str, client: QdrantClient, query: str, limit: int = 10) -> list[models.ScoredPoint]:
     results = client.query_points(
         collection_name=collection_name,
         prefetch=[
             models.Prefetch(
-                query=models.Document(text=query, model="jinaai/jina-embeddings-v2-small-en"),
+                query=Document(text=query, model="jinaai/jina-embeddings-v2-small-en"),
                 using="overview_dense",
-                limit=1 * limit
+                limit=limit
             ),
             models.Prefetch(
-                query=models.Document(text=query, model="jinaai/jina-embeddings-v2-small-en"),
+                query=Document(text=query, model="jinaai/jina-embeddings-v2-small-en"),
                 using="tagline_dense",
-                limit=1 * limit
-            ),
-            
-            models.Prefetch(
-                query=models.Document(text=query, model="jinaai/jina-embeddings-v2-small-en"),
-                using="genre_dense",
-                limit=1 * limit
+                limit=limit
             ),
             models.Prefetch(
-                query=models.Document(
-                    text=query,
-                    model="Qdrant/bm25",
-                ),
+                query=Document(text=query, model="jinaai/jina-embeddings-v2-small-en"),
+                using="keywords_dense",
+                limit=limit
+            ),
+            models.Prefetch(
+                query=Document(text=query, model="Qdrant/bm25"),
                 using="overview_sparse_bm25",
-                limit=(1 * limit),
+                limit=limit
+            ),
+            models.Prefetch(
+                query=Document(text=query, model="Qdrant/bm25"),
+                using="genre_sparse_bm25",
+                limit=limit
             ),
         ],
         
@@ -55,9 +56,10 @@ def multi_stage_search(collection_name:str,  client:QdrantClient, query: str, li
         
 
         #you can use this too
+        
         query=models.FusionQuery(fusion=models.Fusion.RRF),
         with_payload=True,
-       
     )
 
     return results.points
+
