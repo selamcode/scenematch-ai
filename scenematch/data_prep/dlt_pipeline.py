@@ -10,44 +10,47 @@ from dotenv import load_dotenv
 load_dotenv()
 filepath = os.getenv("DATASET_JSON_PATH")
 
-COLLECTION_NAME = "movie-rag-test"
+COLLECTION_NAME = "movie-rag-pipeline"
 # for production 
 #COLLECTION_NAME = "movie-rag"
 EMBEDDING_DIM = 512
 
 # Resource that consumes raw data, does embedding + upsert, yields rows for DLT
+
+    
 @dlt.resource
-def embed_and_store(data):
+def embed_and_store(data, batch_size: int = 500):
     print("Starting embed_and_store resource...")
     client = create_qdrant_local_client()
     print("Qdrant client created.")
-    
+
     create_my_collection(client, COLLECTION_NAME, EMBEDDING_DIM)
     print(f"Collection '{COLLECTION_NAME}' checked/created.")
-    
+
     batch = list(data)
     print(f"Loaded batch of {len(batch)} records.")
-    
+
     if not batch:
         print("No data to process, exiting resource.")
         return
-    
+
     print("Preparing points for embedding...")
     points = prepare_points(batch)
     print(f"Prepared {len(points)} points for upsert.")
-    
+
     print("Upserting points into Qdrant...")
     upsert_points(client, COLLECTION_NAME, points)
     print("Upsert complete.")
-    
-    for idx, row in enumerate(batch):
-        if idx % 1000 == 0:
-            print(f"Yielding row {idx+1} / {len(batch)}")
-        yield row
-    
+
+    for i in range(0, len(batch), batch_size):
+        batch_chunk = batch[i:i + batch_size]
+        print(f"Yielding batch {i // batch_size + 1} with {len(batch_chunk)} records")
+        yield from batch_chunk
+
     print("embed_and_store resource done.")
 
-"""
+
+
 # for procuction 
 # Source that yields the embed_and_store resource with raw data
 @dlt.source
@@ -59,6 +62,7 @@ def movie_source():
     # Yield the resource generator passing the records generator
     yield embed_and_store(iter(records))
     print("movie_source done yielding embed_and_store.")
+
 """
 
 # Source that yields the embed_and_store resource with raw data from cleaned JSON file
@@ -72,7 +76,7 @@ def movie_source():
     # Yield the resource generator passing the records generator
     yield embed_and_store(iter(records))
     print("movie_source done yielding embed_and_store.")
-
+"""
 
 
 if __name__ == "__main__":
