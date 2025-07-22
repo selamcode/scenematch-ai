@@ -12,12 +12,18 @@ def main():
     
     
     load_dotenv()
-    filepath = os.getenv("DATASET_JSON_TEST_PATH")
+    
+    #filepath = os.getenv("DATASET_JSON_TEST_PATH")
+    
+    filepath = os.getenv("DATASET_JSON_PATH")
+    
     
     # create qdrant and openai client 
     movie_client_test = create_qdrant_local_client()
     openai_client = create_openai_client()
-    collection_name = "movie-rag-test"
+    #collection_name = "movie-rag-test"
+    collection_name = "movie-rag"
+    
     emebedding_dim = 512
     
     create_my_collection(movie_client_test, collection_name, emebedding_dim)

@@ -1,16 +1,18 @@
 import dlt
-from data_prep.prepare_data import get_clean_movie_data
-from rag.collection_config import create_my_collection
-from rag.embedding import prepare_points, upsert_points
-from clients.client_setup import create_qdrant_local_client
+from scenematch.data_prep.prepare_data import get_clean_movie_data
+from scenematch.rag.collection_config import create_my_collection
+from scenematch.rag.embedding import prepare_points, upsert_points
+from scenematch.clients.client_setup import create_qdrant_local_client
 import json
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-filepath = os.getenv("DATASET_JSON_TEST_PATH")
+filepath = os.getenv("DATASET_JSON_PATH")
 
 COLLECTION_NAME = "movie-rag-test"
+# for production 
+#COLLECTION_NAME = "movie-rag"
 EMBEDDING_DIM = 512
 
 # Resource that consumes raw data, does embedding + upsert, yields rows for DLT

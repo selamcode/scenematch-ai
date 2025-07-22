@@ -9,7 +9,15 @@ def prepare_points(docs: list[dict]) -> list[PointStruct]:
         overview = doc.get("overview", "")
         tagline = doc.get("tagline", "")
         genres = doc.get("genres", [])
-        keywords = doc.get("keywords", "")
+        keywords = doc.get("keywords", [])
+
+        # Ensure keywords is a list of strings
+        if isinstance(keywords, str):
+            keywords_list = [keywords]
+        elif isinstance(keywords, list):
+            keywords_list = [str(k) for k in keywords if k]
+        else:
+            keywords_list = []
 
         points.append(
             PointStruct(
@@ -24,7 +32,7 @@ def prepare_points(docs: list[dict]) -> list[PointStruct]:
                         model="jinaai/jina-embeddings-v2-small-en",
                     ),
                     "keywords_dense": Document(
-                        text=keywords,
+                        text=" ".join(keywords_list),
                         model="jinaai/jina-embeddings-v2-small-en",
                     ),
                     "overview_sparse_bm25": Document(
@@ -42,7 +50,7 @@ def prepare_points(docs: list[dict]) -> list[PointStruct]:
                     "genres": genres,
                     "overview": overview,
                     "tagline": tagline,
-                    "keywords": keywords,
+                    "keywords": keywords_list,
                 },
             )
         )
@@ -50,6 +58,7 @@ def prepare_points(docs: list[dict]) -> list[PointStruct]:
     return points
 
 
+'''
 def upsert_points(client: QdrantClient, collection_name: str, points: list[PointStruct]) -> None:
     
     client.upsert(
@@ -57,8 +66,26 @@ def upsert_points(client: QdrantClient, collection_name: str, points: list[Point
         points=points,
     )
     print(f"Inserted {len(points)} points into '{collection_name}'.")
+'''
+
+    
+def upsert_points(client: QdrantClient, collection_name: str, points: list[PointStruct], batch_size: int = 500) -> None:
+    
+    total = len(points)
+    print(f"Starting to insert {total} points into '{collection_name}' in batches of {batch_size}...")
+
+    for i in range(0, total, batch_size):
+        batch = points[i:i + batch_size]
+        client.upsert(
+            collection_name=collection_name,
+            points=batch,
+        )
+        print(f"✅ Inserted batch {i // batch_size + 1} — Total so far: {i + len(batch)} / {total}")
+
+    print(f"🎉 Finished inserting all {total} points into '{collection_name}'.")    
 
 def embed(collection_name: str, json_file: str, client: QdrantClient) -> None:
+    
     docs = load_json(json_file)
     points = prepare_points(docs)
     upsert_points(client, collection_name, points)

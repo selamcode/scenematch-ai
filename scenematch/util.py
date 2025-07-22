@@ -1,9 +1,10 @@
 
 import json
 from qdrant_client.models import ScoredPoint
-
+import os
 
 def load_json(filepath: str):
+    filepath = os.path.expanduser(filepath)
     with open(filepath, "r", encoding="utf-8") as f:
         return json.load(f)
 
