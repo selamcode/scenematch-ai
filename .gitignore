@@ -21,13 +21,21 @@ qdrant_storage/
 # ignore pycache
 __paycache__
 
+# desktop chat app
 chat_gui.py
 
+# bytecode
 __pycache__/
 *.py[cod]
 
-
+# Meta data, not important to track 
 .DS_Store
 
 #ignore pipline db for now
 *.duckdb
+
+# hide data am working with for now
+data
+
+# hide dlt pipe line output
+dlt_output

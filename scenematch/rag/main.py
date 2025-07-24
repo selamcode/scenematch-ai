@@ -3,18 +3,16 @@ from dotenv import load_dotenv
 from scenematch.clients.client_setup import create_qdrant_local_client, create_openai_client
 from scenematch.rag.collection_config import create_my_collection
 from scenematch.rag.embedding import embed
-#from search import multi_stage_search
+from scenematch.rag.search import multi_stage_search
 from scenematch.rag.agentic_chat import run_chatbot_loop
+#from scenematch.rag.embedding import build_query_vector
 
 
 def main():
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
-    
-    
     load_dotenv()
-    
     #filepath = os.getenv("DATASET_JSON_TEST_PATH")
-    
+
     filepath = os.getenv("DATASET_JSON_PATH")
     
     
@@ -22,12 +20,12 @@ def main():
     movie_client_test = create_qdrant_local_client()
     openai_client = create_openai_client()
     #collection_name = "movie-rag-test"
-    collection_name = "movie-rag"
+    collection_name = "movies-rag-main"
     
     emebedding_dim = 512
     
-    create_my_collection(movie_client_test, collection_name, emebedding_dim)
-    embed(collection_name,filepath, movie_client_test)
+    #create_my_collection(movie_client_test, collection_name, emebedding_dim)
+    #embed(collection_name,filepath, movie_client_test)
 
     #query = "could you please recommend a romance and action movie"
     #print(multi_stage_search(collection_name,movie_client_test,query, 10))
@@ -38,11 +36,17 @@ def main():
     ...
     ]
     '''
+    query = "what's a good romance movie"
+    #print(multi_stage_search(collection_name, movie_client_test, query, 5))
+    result = multi_stage_search(collection_name, movie_client_test, query, 10)
+    print("Returned points:", result)
+
+    
+    print("\n\n")
+    
+    #run_chatbot_loop(collection_name, movie_client_test, openai_client)
 
 
-    run_chatbot_loop(collection_name, movie_client_test, openai_client)
-
-     
     
     #print(result[0].payload['title'])
     

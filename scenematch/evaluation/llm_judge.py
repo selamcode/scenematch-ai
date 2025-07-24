@@ -1,4 +1,3 @@
-# llm_judge.py - FIXED TO INCLUDE JUDGMENTS KEY
 import json
 import openai
 import os
@@ -13,7 +12,7 @@ def get_llm_judgments(search_function, client, collection_name: str) -> Dict:
     Returns dictionary mapping each query to its search results and LLM judgments
     """
     
-    # Load ground truth from .env
+    # Load ground truth from GROUND_TRUTH_PATH
     ground_truth_path = os.getenv("GROUND_TRUTH_PATH")
     if not ground_truth_path:
         raise ValueError("GROUND_TRUTH_PATH must be set in .env file")
@@ -21,7 +20,7 @@ def get_llm_judgments(search_function, client, collection_name: str) -> Dict:
     with open(ground_truth_path, 'r') as f:
         gt = json.load(f)
     
-    query_judgments = {}  # Dictionary to return
+    query_judgments = {}
     all_queries = []
     
     # Collect all queries
@@ -43,7 +42,6 @@ def get_llm_judgments(search_function, client, collection_name: str) -> Dict:
         movies_info = []
         
         for point in search_results:
-            # Extract key information
             extracted_result = {
                 "title": point.payload.get("title", "Unknown"),
                 "score": float(point.score) if hasattr(point, 'score') else 0.0,
@@ -52,7 +50,6 @@ def get_llm_judgments(search_function, client, collection_name: str) -> Dict:
             }
             extracted_results.append(extracted_result)
             
-            # For LLM prompt (simplified)
             movies_info.append({
                 "title": extracted_result["title"],
                 "overview": point.payload.get("overview", "")[:100] + "...",
@@ -81,28 +78,23 @@ Return ONLY a JSON array like: [1, 0, 1, 1, 0, 0, 1, 0, 1, 0]
                 max_tokens=50
             )
             
-            # Parse response
             response_text = response.choices[0].message.content.strip()
             judgments = json.loads(response_text)
-            
-            # Ensure correct length
-            judgments = (judgments + [0] * 10)[:10]  # Pad or truncate to 10
+            judgments = (judgments + [0] * 10)[:10]
             
         except Exception as e:
-            print(f"❌ LLM call failed: {e}")
-            # Fallback if LLM fails
+            print(f"LLM call failed: {e}")
             judgments = [0] * 10
         
-        # Store in dictionary - ENSURE ALL KEYS ARE INCLUDED
+        # Store in dictionary
         query_judgments[query_key] = {
             "query_text": query,
             "search_results": extracted_results,
-            "judgments": judgments,  # ← THIS IS THE KEY YOU'RE MISSING
+            "judgments": judgments,
             "relevant_count": sum(judgments)
         }
         
-        print(f"✅ Judgments: {judgments} (Relevant: {sum(judgments)}/10)")
-        print(f"📊 Keys in result: {list(query_judgments[query_key].keys())}")  # Debug line
+        print(f"Judgments: {judgments} (Relevant: {sum(judgments)}/10)")
     
     print(f"\n✅ Generated judgments for {len(query_judgments)} queries")
     return query_judgments
@@ -119,15 +111,14 @@ if __name__ == "__main__":
         collection_name="movies"
     )
     
-    # Save results
-    with open("llm_judgments_map.json", "w") as f:
+    # Save to EVALUATION_RESULT folder
+    evaluation_result_dir = os.getenv("EVALUATION_RESULT")
+    if not evaluation_result_dir:
+        raise ValueError("EVALUATION_RESULT must be set in .env file")
+    
+    output_file = os.path.join(evaluation_result_dir, "llm_judgments_map.json")
+    
+    with open(output_file, "w") as f:
         json.dump(judgments_dict, f, indent=2)
     
-    print(f"\n📊 Sample output structure:")
-    sample_key = list(judgments_dict.keys())[0]
-    sample_query = judgments_dict[sample_key]
-    
-    print(f"Query: {sample_query['query_text'][:50]}...")
-    print(f"Search results: {len(sample_query['search_results'])} movies")
-    print(f"Judgments: {sample_query['judgments']}")  # ← Should show the array
-    print(f"Relevant count: {sample_query['relevant_count']}")
+    print(f"💾 Saved LLM judgments to: {output_file}")
