@@ -1,12 +1,15 @@
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from datetime import datetime
+from datetime import datetime, timezone
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # load .env file variables into environment
 
 Base = declarative_base()
 
 class UserFeedback(Base):
-    
     __tablename__ = 'user_feedback'
 
     id = Column(Integer, primary_key=True)
@@ -18,9 +21,10 @@ class UserFeedback(Base):
     comment = Column(Text)
     user_message = Column(Text)
     model_response = Column(Text)
-    timestamp = Column(DateTime, default=datetime)
+    timestamp = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
-# Setup
-engine = create_engine('sqlite:///database.db')
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://localhost:5432/feedback_db")
+
+engine = create_engine(DATABASE_URL, echo=True)
 Base.metadata.create_all(engine)
 SessionLocal = sessionmaker(bind=engine)

@@ -18,11 +18,35 @@
       {% endfor %}
     </div>
 
-    <form method="POST">
+    <!-- Chat Input Form -->
+    <form method="POST" action="/">
       <input type="text" name="message" placeholder="Ask for a movie..." required autocomplete="off" autofocus />
       <button type="submit">Send</button>
     </form>
+
+   <!-- Feedback Form -->
+  {% if chat_history|length >= 2 %}
+  <div class="feedback-widget">
+    <h4>Rate Response</h4>
+    <form method="POST" action="/feedback">
+      <input type="hidden" name="user_id" value="anonymous">
+      <input type="hidden" name="session_id" value="static-session">
+      <input type="hidden" name="user_message" value="{{ chat_history[-2][1] }}">
+      <input type="hidden" name="model_response" value="{{ chat_history[-1][1] }}">
+      <input type="hidden" name="message_id" value="">
+
+      <label for="rating">Rating:</label>
+      <input type="number" name="rating" min="1" max="5" required>
+
+      <label for="comment">Comment:</label>
+      <input type="text" name="comment" placeholder="Optional feedback">
+
+      <button type="submit">Submit</button>
+    </form>
   </div>
+  {% endif %}
+
+
 
   <script>
     const chat = document.getElementById('chat');

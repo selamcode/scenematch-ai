@@ -1,3 +1,4 @@
+/* === Base Styles === */
 body {
   background: #0d1117;
   color: #fff;
@@ -15,12 +16,14 @@ body {
   padding: 1rem;
 }
 
+/* === Headings === */
 h2 {
   text-align: center;
   color: #58a6ff;
   margin-bottom: 1rem;
 }
 
+/* === Chat Area === */
 .chat {
   background: #161b22;
   padding: 1rem;
@@ -32,6 +35,7 @@ h2 {
   flex-direction: column;
 }
 
+/* === Chat Bubbles === */
 .bubble {
   margin-bottom: 1rem;
   padding: 0.5rem 0.75rem;
@@ -41,29 +45,29 @@ h2 {
 }
 
 .user {
-  background: #1f6feb; /* medium bright blue */
+  background: #1f6feb;
   color: white;
   align-self: flex-end;
 }
 
 .bot {
-  background: #2e7d32; /* strong dark green */
+  background: #2e7d32;
   color: white;
   align-self: flex-start;
 }
 
-.user .label {
-  color: #00e5ff; /* bright cyan for "You:" label */
+.label {
   font-weight: 700;
   margin-bottom: 0.25rem;
   display: block;
 }
 
+.user .label {
+  color: #00e5ff;
+}
+
 .bot .label {
-  color: #ffb300; /* bright amber for "MovieBot:" label */
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-  display: block;
+  color: #ffb300;
 }
 
 .message {
@@ -71,7 +75,8 @@ h2 {
   margin-left: 0.25rem;
 }
 
-form {
+/* === Chat Form === */
+form:not([action="/feedback"]) {
   display: flex;
   gap: 0.5rem;
 }
@@ -82,6 +87,12 @@ input[type="text"] {
   border: none;
   border-radius: 6px;
   font-size: 1rem;
+  background: #21262d;
+  color: white;
+}
+
+input[type="text"]::placeholder {
+  color: #aaa;
 }
 
 button {
@@ -92,8 +103,71 @@ button {
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
+  transition: background 0.2s ease;
 }
 
 button:hover {
   background: #2a6fdb;
+}
+
+/* === Feedback Form (Inline) === */
+form[action="/feedback"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+form[action="/feedback"] label {
+  font-weight: bold;
+  color: #58a6ff;
+  font-size: 12px;
+  margin: 0;
+}
+
+form[action="/feedback"] input[type="number"],
+form[action="/feedback"] input[type="text"] {
+  padding: 0.3rem;
+  border-radius: 4px;
+  border: none;
+  background: #0d1117;
+  color: white;
+  font-size: 12px;
+  margin-bottom: 0.3rem;
+}
+
+form[action="/feedback"] button {
+  padding: 0.4rem;
+  font-size: 12px;
+  background-color: #388bfd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form[action="/feedback"] button:hover {
+  background-color: #2a6fdb;
+}
+
+/* === Floating Feedback Widget === */
+.feedback-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 220px;      /* was 180px */
+  background-color: #161b22;
+  color: #fff;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 1rem;     /* was 0.8rem */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  font-family: sans-serif;
+}
+
+.feedback-widget h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 14px;
+  color: #58a6ff;
+  text-align: center;
 }

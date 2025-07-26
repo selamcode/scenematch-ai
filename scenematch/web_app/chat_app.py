@@ -4,6 +4,8 @@ from scenematch.rag.search import multi_stage_search
 from scenematch.clients.client_setup import create_qdrant_local_client, create_openai_client
 from scenematch.util import get_payloads
 import os
+from scenematch.web_app.model import SessionLocal, UserFeedback
+from datetime import datetime,timezone
 from dotenv import load_dotenv
 
 app = Flask(__name__)
@@ -25,6 +27,7 @@ openai_client = create_openai_client()
 # from scenematch.rag.embedding import embed
 # create_my_collection(qdrant_client, collection_name, embedding_dim)
 # embed(collection_name, filepath, qdrant_client)
+
 
 @app.route("/", methods=["GET", "POST"])
 def chat():
@@ -55,6 +58,41 @@ def chat():
         chat_history.append(("bot", reply))
 
     return render_template("chat.html", chat_history=chat_history)
+
+@app.route("/feedback", methods=["POST"])
+def receive_feedback():
+    data = request.form
+    session = SessionLocal()
+
+    try:
+        rating_val = int(data.get("rating", 0))
+    except ValueError:
+        rating_val = 0
+
+    feedback = UserFeedback(
+        user_id=data.get("user_id", "anonymous"),
+        session_id=data.get("session_id", "static-session"),
+        message_id=data.get("message_id", ""),
+        feedback_type="rating",
+        rating=rating_val,
+        comment=data.get("comment", ""),
+        user_message=data.get("user_message", ""),
+        model_response=data.get("model_response", ""),
+        timestamp=datetime.now(timezone.utc)
+    )
+    try:
+        session.add(feedback)
+        session.commit()
+        chat_history.append(("bot", "Thanks for your feedback! 👍"))
+    except Exception as e:
+        session.rollback()
+        chat_history.append(("bot", f"Error saving feedback: {str(e)}"))
+    finally:
+        session.close()
+
+    return render_template("chat.html", chat_history=chat_history)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=5000)
