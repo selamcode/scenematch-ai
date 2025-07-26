@@ -1,6 +1,7 @@
 from qdrant_client import models, QdrantClient 
 from qdrant_client.models import Document
 
+# Hybrid search
 def multi_stage_search(collection_name: str, client: QdrantClient, query: str, limit: int ) -> list[models.ScoredPoint]:
     results = client.query_points(
         collection_name=collection_name,
@@ -31,6 +32,10 @@ def multi_stage_search(collection_name: str, client: QdrantClient, query: str, l
                 limit=limit
             ),
         ],
+        
+        
+        # If you want to use DBSF uncomment the next line
+        # query=models.FusionQuery(fusion=models.Fusion.DBSF)
         query=models.FusionQuery(fusion=models.Fusion.RRF),
         with_payload=True,
     )

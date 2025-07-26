@@ -1,62 +1,43 @@
 import os
 from dotenv import load_dotenv
 from scenematch.clients.client_setup import create_qdrant_local_client, create_openai_client
-from scenematch.rag.collection_config import create_my_collection
-from scenematch.rag.embedding import embed
-from scenematch.rag.search import multi_stage_search
+from scenematch.rag.collection_config import create_my_collection # for testing your own
+from scenematch.rag.embedding import embed # for testing your own 
+from scenematch.rag.search import multi_stage_search # if you want to test the retrieval 
 from scenematch.rag.agentic_chat import run_chatbot_loop
-#from scenematch.rag.embedding import build_query_vector
-
 
 def main():
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
+    
+    
+    """You can uncomment this to create your own collection and embedding"""
+    
+    '''
     load_dotenv()
-    #filepath = os.getenv("DATASET_JSON_TEST_PATH")
-
+    
+    # raw movies json file
     filepath = os.getenv("DATASET_JSON_PATH")
     
-    
-    # create qdrant and openai client 
-    movie_client_test = create_qdrant_local_client()
-    openai_client = create_openai_client()
-    #collection_name = "movie-rag-test"
+    # choose vector dimention
+    emebedding_dim = 512
+    # index 
     collection_name = "movies-rag-main"
     
-    emebedding_dim = 512
-    
-    #create_my_collection(movie_client_test, collection_name, emebedding_dim)
-    #embed(collection_name,filepath, movie_client_test)
-
-    #query = "could you please recommend a romance and action movie"
-    #print(multi_stage_search(collection_name,movie_client_test,query, 10))
-    '''
-    [
-    ScoredPoint(id=10, version=12, score=1.0, payload={'title': 'Shutter Island', 'vote_average': 8.2, 'genres': ['thriller', 'mystery']}),
-    ScoredPoint(id=16, version=12, score=0.66, payload={'title': 'Avatar', 'vote_average': 7.9, 'genres': ['adventure', 'science fiction']}),
-    ...
-    ]
-    '''
-    query = "what's a good romance movie"
-    #print(multi_stage_search(collection_name, movie_client_test, query, 5))
-    result = multi_stage_search(collection_name, movie_client_test, query, 10)
-    print("Returned points:", result)
-
-    
-    print("\n\n")
-    
-    #run_chatbot_loop(collection_name, movie_client_test, openai_client)
-
-
-    
-    #print(result[0].payload['title'])
-    
-    
+    # create collection and embed movie data
+    create_my_collection(movie_client_test, collection_name, emebedding_dim)
+    embed(collection_name,filepath, movie_client_test)
     
     '''
-    print("\n Here are your top 10 recomendations \n")
-    for point in result:
-        print("\n", point.payload["title"])
-    '''
+    
+    # Create qdrant and openai client 
+    movie_client_test = create_qdrant_local_client()
+    openai_client = create_openai_client()
+    
+    # Using exiting collection name 
+    collection_name = "movies-rag-main"
+    
+    # Run the chatbot for movie recomendation
+    run_chatbot_loop(collection_name, movie_client_test, openai_client)
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,3 @@
-# dlt_pipe.py - SIMPLIFIED VERSION
 import dlt
 import os
 import pandas as pd

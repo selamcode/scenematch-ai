@@ -42,3 +42,43 @@ def get_payloads(results: list[ScoredPoint]) -> list[str]:
 
     return formatted
 
+
+    
+def format_payload_for_llm(payload_list: list[str]) -> str:
+    """Format movie payloads in a minimal structure for LLM understanding"""
+    if not payload_list:
+        return "No movies available."
+    
+    formatted_movies = []
+    for i, movie_data in enumerate(payload_list, 1):
+        formatted_movies.append(f"Movie {i}:\n{movie_data}")
+    
+    return "\n\n".join(formatted_movies)
+
+
+if __name__ == "__main__":
+    from scenematch.rag.search import multi_stage_search
+    from scenematch.clients.client_setup import create_qdrant_local_client
+    
+    # Test both functions together
+    client = create_qdrant_local_client()
+    results = multi_stage_search("movies-rag-main", client, "romantic comedies", limit=3)
+    
+    if results:
+        print("=== Testing get_payloads ===\n")
+        payload_list = get_payloads(results)
+        
+        print("=== Testing format_payload_for_llm ===\n")
+        llm_formatted = format_payload_for_llm(payload_list)
+        print(llm_formatted)
+        
+        print(f"\n=== Summary ===")
+        print(f"Found {len(results)} movies")
+        print(f"Formatted into {len(payload_list)} payload strings")
+        print(f"Final LLM format length: {len(llm_formatted)} characters")
+        
+    else:
+        print("No results found!")
+
+
+

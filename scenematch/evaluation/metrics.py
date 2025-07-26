@@ -1,16 +1,12 @@
 """
-retrieval_evaluation_methods.py
----------------------------------------------------------------
-retrieval metrics
------------------
-Metrics provided
------------------
-precision_at_k   – quality of the first *k* results
+evaluation Metrics provided
+---------------------------
+precision_at_k   – quality of the top k results
 recall           – coverage of all relevant items
 reciprocal_rank  – rank position of the first relevant item
 hit_rate_k       – 1 ⇢ hit present in top-k, else 0
 """
-# metrics.py
+
 from typing import List, Set, Dict
 
 def precision_at_k(ranked: List[str], relevant: Set[str], k: int) -> float:
@@ -35,6 +31,7 @@ def hit_rate_k(ranked: List[str], relevant: Set[str], k: int) -> float:
     return 1.0 if any(doc_id in relevant for doc_id in ranked[:k]) else 0.0
 
 def calculate_all_metrics(ranked: List[str], relevant: Set[str], k: int = 10) -> Dict[str, float]:
+    
     """Calculate all metrics at once"""
     return {
         'precision_at_k': precision_at_k(ranked, relevant, k),

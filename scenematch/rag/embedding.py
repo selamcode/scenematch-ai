@@ -4,52 +4,49 @@ from qdrant_client.models import Document
 from scenematch.util import load_json
 from typing import List
 
-#from typing import List
-#from qdrant_client.models import PointStruct
-#from docarray import Document
 
-EMB_MODEL = "jinaai/jina-embeddings-v2-small-en"   # central place to change encoder
+EMB_MODEL = "jinaai/jina-embeddings-v2-small-en"   
 
 def prepare_points(docs: List[dict]) -> List[PointStruct]:
     points: List[PointStruct] = []
 
     for doc in docs:
-        # ---------- raw text -------------
+        # Raw text
         overview: str  = doc.get("overview", "")
         tagline: str   = doc.get("tagline", "")
         genres         = doc.get("genres", [])
         keywords       = doc.get("keywords", [])
-        cast           = doc.get("cast", [])       # list of actor names
+        cast           = doc.get("cast", [])       
         director: str  = doc.get("director", "")
 
-        # ---------- normalise lists -------------
+        # Normalise lists 
         genres_list   = [str(g) for g in (genres   if isinstance(genres,  list) else [genres])   if g]
         keywords_list = [str(k) for k in (keywords if isinstance(keywords, list) else [keywords]) if k]
         cast_list     = [str(c) for c in (cast     if isinstance(cast,     list) else [cast])     if c]
 
-        # ---------- join helper strings -------------
+        # Join helper strings
         text_genres    = " ".join(genres_list)
         text_keywords  = " ".join(keywords_list)
         text_cast      = " ".join(cast_list)
         text_names_all = f"{text_cast} {director}".strip()
 
-        # ---------- vectors -------------
+        # Vectors
         vectors = {
-            # dense semantic
+            # Dense semantic
             "overview_dense":  Document(text=overview,   model=EMB_MODEL),
             "tagline_dense":   Document(text=tagline,    model=EMB_MODEL),
             "keywords_dense":  Document(text=text_keywords, model=EMB_MODEL),
             "cast_dense":      Document(text=text_cast,  model=EMB_MODEL),
             "director_dense":  Document(text=director,   model=EMB_MODEL),
 
-            # sparse BM25
+            # Sparse BM25
             "overview_sparse_bm25":  Document(text=overview,        model="Qdrant/bm25"),
             "genre_sparse_bm25":     Document(text=text_genres,     model="Qdrant/bm25"),
             "keywords_sparse_bm25":  Document(text=text_keywords,   model="Qdrant/bm25"),
             "names_sparse_bm25":     Document(text=text_names_all,  model="Qdrant/bm25"),
         }
 
-        # ---------- payload (for filtering / reranking) -------------
+        # Payload (for filtering / reranking)
         payload = {
             "uuid":      doc.get("uuid"),
             "title":     doc.get("title"),

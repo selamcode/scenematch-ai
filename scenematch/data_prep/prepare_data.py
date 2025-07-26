@@ -60,7 +60,7 @@ def get_clean_movie_data(as_json: bool = False):
         return cleaned_df.to_dict(orient="records")
     return cleaned_df
 
-# 🔧 New function: clean and write to JSON
+# New function: clean and write to JSON
 def prepare_cleaned_data_json():
     json_path = get_output_json_path()
     if not json_path:

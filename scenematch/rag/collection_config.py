@@ -5,17 +5,17 @@ from qdrant_client.models import VectorParams, SparseVectorParams, Distance, Hns
 def create_my_collection(
         client: QdrantClient,
         collection_name: str,
-        embedding_dim: int = 384           # jina-embeddings-v2-small-en output size
+        embedding_dim: int = 512           # jina-embeddings-v2-small-en output size
 ) -> None:
 
-    # ----- recreate collection if it already exists -----
+    # Recreate collection if it already exists 
     if client.collection_exists(collection_name=collection_name):
         print(f"Collection '{collection_name}' already exists – deleting so we can apply new schema.")
         client.delete_collection(collection_name=collection_name)
 
     print(f"Creating collection '{collection_name}' ...")
 
-    # ----- dense vector fields (all share same dimension) -----
+    # Dense vector fields (all share same dimension)
     vectors_config = {
         "overview_dense":  VectorParams(size=embedding_dim, distance=Distance.COSINE),
         "tagline_dense":   VectorParams(size=embedding_dim, distance=Distance.COSINE),
@@ -24,7 +24,7 @@ def create_my_collection(
         "director_dense":  VectorParams(size=embedding_dim, distance=Distance.COSINE),
     }
 
-    # ----- sparse BM25 fields -----
+    # Sparse BM25 fields
     sparse_vectors_config = {
         "overview_sparse_bm25":  SparseVectorParams(modifier=models.Modifier.IDF),
         "genre_sparse_bm25":     SparseVectorParams(modifier=models.Modifier.IDF),
@@ -32,7 +32,7 @@ def create_my_collection(
         "names_sparse_bm25":     SparseVectorParams(modifier=models.Modifier.IDF),
     }
 
-    # ----- create collection -----
+    # Create collection 
     client.create_collection(
         collection_name=collection_name,
         vectors_config=vectors_config,

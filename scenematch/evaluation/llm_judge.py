@@ -108,7 +108,7 @@ if __name__ == "__main__":
     judgments_dict = get_llm_judgments(
         search_function=multi_stage_search,
         client=client,
-        collection_name="movies"
+        collection_name="movies-rag-main"
     )
     
     # Save to EVALUATION_RESULT folder
