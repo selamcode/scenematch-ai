@@ -39,3 +39,11 @@ data
 
 # hide dlt pipe line output
 dlt_output
+
+#grafana
+grafana-storage
+grafana
+
+# database
+database.db
+pgdata/

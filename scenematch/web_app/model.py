@@ -5,10 +5,12 @@ from datetime import datetime, timezone
 from dotenv import load_dotenv
 import os
 
-load_dotenv()  # load .env file variables into environment
+# load .env file variables
+load_dotenv()
 
 Base = declarative_base()
 
+# Feedback model
 class UserFeedback(Base):
     __tablename__ = 'user_feedback'
 

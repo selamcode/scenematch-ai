@@ -1,4 +1,4 @@
-/* === Base Styles === */
+/* Base Styles */
 body {
   background: #0d1117;
   color: #fff;
@@ -16,14 +16,14 @@ body {
   padding: 1rem;
 }
 
-/* === Headings === */
+/* Headings */
 h2 {
   text-align: center;
   color: #58a6ff;
   margin-bottom: 1rem;
 }
 
-/* === Chat Area === */
+/* Chat Area */
 .chat {
   background: #161b22;
   padding: 1rem;
@@ -35,7 +35,7 @@ h2 {
   flex-direction: column;
 }
 
-/* === Chat Bubbles === */
+/* Chat Bubbles */
 .bubble {
   margin-bottom: 1rem;
   padding: 0.5rem 0.75rem;
@@ -75,7 +75,7 @@ h2 {
   margin-left: 0.25rem;
 }
 
-/* === Chat Form === */
+/* Chat Form  */
 form:not([action="/feedback"]) {
   display: flex;
   gap: 0.5rem;
@@ -110,7 +110,7 @@ button:hover {
   background: #2a6fdb;
 }
 
-/* === Feedback Form (Inline) === */
+/* Feedback Form (Inline) */
 form[action="/feedback"] {
   display: flex;
   flex-direction: column;
@@ -149,7 +149,7 @@ form[action="/feedback"] button:hover {
   background-color: #2a6fdb;
 }
 
-/* === Floating Feedback Widget === */
+/* Floating Feedback Widget */
 .feedback-widget {
   position: fixed;
   bottom: 20px;

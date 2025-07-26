@@ -19,12 +19,14 @@
     </div>
 
     <!-- Chat Input Form -->
+     
     <form method="POST" action="/">
       <input type="text" name="message" placeholder="Ask for a movie..." required autocomplete="off" autofocus />
       <button type="submit">Send</button>
     </form>
 
    <!-- Feedback Form -->
+
   {% if chat_history|length >= 2 %}
   <div class="feedback-widget">
     <h4>Rate Response</h4>
@@ -45,8 +47,6 @@
     </form>
   </div>
   {% endif %}
-
-
 
   <script>
     const chat = document.getElementById('chat');
