@@ -10,25 +10,26 @@ def main():
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
     
     
-    """You can uncomment this to create your own collection and embedding"""
-    
-    '''
-    load_dotenv()
-    
-    # raw movies json file
-    filepath = os.getenv("DATASET_JSON_PATH")
-    
-    # choose vector dimention
-    emebedding_dim = 512
-    # index 
-    collection_name = "movies-rag-main"
-    
-    # create collection and embed movie data
-    create_my_collection(movie_client_test, collection_name, emebedding_dim)
-    embed(collection_name,filepath, movie_client_test)
-    
-    '''
-    
+    # Set this to True when you want to create/embed your collection
+    CREATE_NEW_COLLECTION = False
+
+    if CREATE_NEW_COLLECTION:
+        load_dotenv()
+        
+        # Raw movies json file
+        filepath = os.getenv("DATASET_JSON_PATH")
+        
+        # Choose vector dimension
+        embedding_dim = 512
+        
+        # Index 
+        collection_name = "movies-rag-main"
+        
+        # Create collection and embed movie data
+        create_my_collection(movie_client_test, collection_name, embedding_dim)
+        embed(collection_name, filepath, movie_client_test)
+
+        
     # Create qdrant and openai client 
     movie_client_test = create_qdrant_local_client()
     openai_client = create_openai_client()
