@@ -59,3 +59,4 @@ Track sentiment over time (trend),
 See the overall score balance (distribution), and
 
 Read the underlying stories (latest feedback).
+
