@@ -1,7 +1,12 @@
 # Scenematch AI – System Components  
 
+### What is scenemathch: 
+
+- Is an `Agentic RAG` movie recommendation system.
+
+
 ---
-## 0. Design 
+## Design 
 
 ####  Here is the design of our system:
 ![Scenematch AI Design](images/scenematch-rag-design-v2.png)
@@ -85,7 +90,6 @@ DATASET_PATH="/path/to/movies.csv"
 CLEANED_DATA_PATH="/path/to/output/"
 ```
 
-
 ---
 
 ## 3. Evaluation Package
@@ -112,12 +116,9 @@ Assess retrieval quality via an LLM-as-a-Judge framework.
 | `hit_rate_k` | Binary indicator: at least one hit in top-k. |
 
 
-
 > Generation evaluation is skipped because generation is used only for reranking.
 
-
 ---
-
 
 ## 4. Monitoring Package
 

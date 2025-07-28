@@ -2,28 +2,24 @@
 
 End-to-end, reproducible demo of an **agentic-RAG** movie-recommendation system.
 
-From data prep to hybrid search to an LLM-powered chatbot—plus feedback dashboards for continuous improvement.
+From data prep to hybrid search to an LLM-powered chatbot plus feedback dashboards for continuous improvement.
 
 ---
 
-### Movies data source:
+## Main Technologies
 
-> Download the csv version:
-
-- https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies
-
-<br>
-
-## 1. Main Technologies
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![OPENAI](https://img.shields.io/badge/OPENAI-412991?style=for-the-badge&logo=openai&logoColor=white)
-![Qdrant](https://img.shields.io/badge/Qdrant-5E3EFB?style=for-the-badge&logo=qdrant&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-146f45?style=for-the-badge&logo=postgresql&logoColor=white)
-![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![PANDAS](https://img.shields.io/badge/PANDAS-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=plastic&logo=python&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=plastic&logo=openai&logoColor=white)
+![Qdrant](https://img.shields.io/badge/Qdrant-5E3EFB?style=plastic&logo=qdrant&logoColor=white)
+![DLT](https://img.shields.io/badge/DLT-FF7F50?style=plastic&logo=gear&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=plastic&logo=pandas&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=plastic&logo=flask&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML-E34F26?style=plastic&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-1572B6?style=plastic&logo=css3&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-E99623?style=plastic&logo=sqlalchemy&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-146f45?style=plastic&logo=postgresql&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=plastic&logo=grafana&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=plastic&logo=docker&logoColor=white)
 
 
 | Layer | Tech |
@@ -37,6 +33,18 @@ From data prep to hybrid search to an LLM-powered chatbot—plus feedback dashbo
 | ORM / DB | SQLAlchemy + PostgreSQL |
 | Monitoring | Grafana |
 | Containerization | Docker & Docker Compose |
+
+<br>
+
+### Documentation:
+
+You can read the doc and see system design inside the doc directory.
+
+## 1. Movies data source:
+
+> Download the csv version:
+
+- https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies
 
 <br>
 
@@ -77,11 +85,9 @@ scenematch-ai/                         # ← project root
             └── datasources.yaml
 
 ```
-
 <br>
 
 ## 3. Quick-start (local)
-
 
 #### 1. Clone repo
 
@@ -101,7 +107,7 @@ cd scenematch-ai
 ```
 <br>
 
-#### 2. Python env
+#### 2. Setup Python env
 <br>
 
 ``` bash
@@ -187,18 +193,13 @@ CREATE_NEW_COLLECTION = True in scenematch/rag/main.py
 ```python
 python -m scenematch.rag.main
 ```
-<br>
 
 > Make sure you run `a` before `b`, the indexing and embeding happens in `a`.
-
-<br>
 
 - ##### b) Web
 ```python
 python -m scenematch.web_app.chat_app # open http://127.0.0.1:5000
 ```
-
-<br>
 
 ##### Bonus
 
