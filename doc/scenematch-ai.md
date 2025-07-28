@@ -177,6 +177,19 @@ Open http://localhost:3000 (login: admin / admin)
 
 ## 5. rag package
 
+### Purpose  
+Implementation of a retrieval-augmented generation (RAG) stack.
+Within this package you can:
+
+- Index: create a Qdrant collection tailored for movie data.
+
+- Embed: generate dense and sparse vectors for each film and upsert them as points.
+
+- Search: run hybrid (dense + BM25) queries that fuse scores for better recall.
+
+- Chat: launch a lightweight MovieBot that detects intent, fetches relevant movies, and responds through an LLM.
+
+
 ### Module: `agentic_chat.py`
 
 | Function | Purpose |
@@ -227,6 +240,15 @@ Open http://localhost:3000 (login: admin / admin)
 ----
 
 ## web_app package
+
+### Purpose
+Lightweight Flask web application that wraps the agentic RAG system:
+
+- UI: browser-based chat front-end with chat.html and chat.css.
+
+- Conversation: routes messages through MovieBot’s intent detector, hybrid search, and LLM response generator.
+
+- Feedback: captures user ratings/comments and persists them via the UserFeedback model for later analytics.
 
 ### Module: `chat_app.py`
 
