@@ -2,10 +2,7 @@
 
 End-to-end, reproducible demo of an **agentic-RAG** movie-recommendation system.
 
-From data prep to hybrid search to an LLM-powered chatbot plus feedback dashboards for continuous improvement.
-
 ---
-
 ## Main Technologies
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=plastic&logo=python&logoColor=white)
