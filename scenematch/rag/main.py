@@ -17,7 +17,7 @@ def main():
         load_dotenv()
         
         # Raw movies json file
-        filepath = os.getenv("DATASET_JSON_PATH")
+        filepath = os.getenv("CLEANED_DATA_PATH")
         
         # Choose vector dimension
         embedding_dim = 512
